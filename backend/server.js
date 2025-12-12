@@ -13,7 +13,7 @@ const app = express();
 app.use(cors({
     origin: [
         "*",
-        "https://matchmaking-u9a9.vercel.app"
+        "https://match-5b62.vercel.app/"
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
