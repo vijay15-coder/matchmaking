@@ -39,7 +39,8 @@ export default function MatchMaker(){
 
   const loadAllMatches = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/match')
+      const API = import.meta.env.VITE_BACKEND_URL;
+      const res = await fetch(`${API}/api/match`)
       const data = await res.json()
       const sorted = (data || []).sort((a, b) => a.matchNumber - b.matchNumber)
       setAllMatches(sorted)
@@ -182,7 +183,8 @@ export default function MatchMaker(){
   const generateMatches = async () => {
     setLoading(true)
     try {
-      const res = await fetch('http://localhost:5000/api/person/generate', { method: 'POST' })
+      const API = import.meta.env.VITE_BACKEND_URL;
+      const res = await fetch(`${API}/api/person/generate`, { method: 'POST' })
       const json = await res.json()
       if (!res.ok) {
         setMsg(json.error || 'Error generating matches')
@@ -207,7 +209,7 @@ export default function MatchMaker(){
           }
           
           try {
-            const saveRes = await fetch('http://localhost:5000/api/match', {
+            const saveRes = await fetch(`${API}/api/match`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(matchData)
@@ -249,7 +251,8 @@ export default function MatchMaker(){
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/match', {
+      const API = import.meta.env.VITE_BACKEND_URL;
+      const res = await fetch(`${API}/api/match`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(matchData)
@@ -272,7 +275,8 @@ export default function MatchMaker(){
     if (!confirm('Delete this match?')) return
 
     try {
-      const res = await fetch(`http://localhost:5000/api/match/${matchId}`, {
+      const API = import.meta.env.VITE_BACKEND_URL;
+      const res = await fetch(`${API}/api/match/${matchId}`, {
         method: 'DELETE'
       })
       const data = await res.json()
@@ -342,7 +346,8 @@ export default function MatchMaker(){
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/api/match/${match._id}`, {
+      const API = import.meta.env.VITE_BACKEND_URL;
+      const res = await fetch(`${API}/api/match/${match._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(resultData)
@@ -400,7 +405,8 @@ export default function MatchMaker(){
     if (!confirm('Delete ALL matches from database? This cannot be undone!')) return
 
     try {
-      const res = await fetch('http://localhost:5000/api/match', {
+      const API = import.meta.env.VITE_BACKEND_URL;
+      const res = await fetch(`${API}/api/match`, {
         method: 'DELETE'
       })
       const data = await res.json()

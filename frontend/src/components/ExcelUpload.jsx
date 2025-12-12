@@ -9,7 +9,8 @@ export default function ExcelUpload(){
     const fd = new FormData()
     fd.append('file', file)
     try {
-      const res = await fetch('http://localhost:5000/api/person/upload', {
+      const API = import.meta.env.VITE_BACKEND_URL;
+      const res = await fetch(`${API}/api/person/bulk-upload`, {
         method:'POST',
         body: fd
       })

@@ -12,7 +12,8 @@ export default function PeopleList({ filters }){
   const fetchData = async () => {
     setLoading(true)
     const params = new URLSearchParams(filters).toString()
-    const url = 'http://localhost:5000/api/person' + (params ? '?' + params : '')
+    const API = import.meta.env.VITE_BACKEND_URL;
+    const url = `${API}/api/person` + (params ? '?' + params : '')
     try {
       const res = await fetch(url)
       const json = await res.json()
@@ -32,7 +33,8 @@ export default function PeopleList({ filters }){
   const remove = async (id) => {
     if (!confirm('Are you sure you want to delete this member?')) return
     try {
-      await fetch('http://localhost:5000/api/person/'+id, { method:'DELETE' })
+      const API = import.meta.env.VITE_BACKEND_URL;
+      await fetch(`${API}/api/person/${id}`, { method:'DELETE' })
       setData(data.filter(d => d._id !== id))
       setMsg('Member removed')
       setMsgType('success')
@@ -49,7 +51,8 @@ export default function PeopleList({ filters }){
     if (!confirm('This will permanently delete ALL members. Continue?')) return
     setClearing(true)
     try {
-      const res = await fetch('http://localhost:5000/api/person', { method: 'DELETE' })
+      const API = import.meta.env.VITE_BACKEND_URL;
+      const res = await fetch(`${API}/api/person`, { method: 'DELETE' })
       let json = {}
       try { json = await res.json() } catch(e) { /* ignore json parse error */ }
       if (!res.ok) {
