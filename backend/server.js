@@ -9,14 +9,15 @@ const matchRouter = require('./routes/match');
 
 const app = express();
 
-// CORS Setup — allow your Render backend URL
+const cors = require("cors");
+
 app.use(cors({
-  origin: [
-    "https://matchmaking-2-06m2.onrender.com", // your Render web service URL
-    "http://localhost:3000"                   // dev frontend access
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
+    origin: [
+        "*",
+        "https://matchmaking-u9a9.vercel.app"   // your frontend URL
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
 }));
 
 app.use(express.json());
