@@ -13,7 +13,7 @@ const app = express();
 app.use(cors({
     origin: [
         "*",
-        "https://match-5b62.vercel.app"
+        "https://match-vtpn.vercel.app"
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
