@@ -12,7 +12,6 @@ const app = express();
 // CORS FIX
 app.use(cors({
     origin: [
-        "http://localhost:5173",
         "https://matchmaking-u9a9.vercel.app"
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
