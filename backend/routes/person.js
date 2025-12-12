@@ -67,7 +67,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 // Upload Excel and insert many
-router.post('/upload', upload.single('file'), async (req, res) => {
+router.post('/bulk-upload', upload.single('file'), async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
     console.log('Uploading file:', req.file.originalname)
@@ -77,10 +77,12 @@ router.post('/upload', upload.single('file'), async (req, res) => {
     console.log(`Read ${data.length} rows from Excel`)
     console.log('First row headers:', Object.keys(data[0] || {}))
 
-    // Map spreadsheet headers to schema fields (Name, Age, Weight, Belt, Master Name, District name)
+    // Map spreadsheet headers to schema fields (Name, Age, City, Email, Weight, Belt, Master Name, District name)
     const docs = data.map(row => {
       const rawName = row.name || row.Name || row.NAME || ''
       const rawAge = row.age || row.Age || row.AGE || ''
+      const rawCity = row.city || row.City || row.CITY || ''
+      const rawEmail = row.email || row.Email || row.EMAIL || ''
       const rawWeight = row.Weight || row.weight || row.WEIGHT || ''
       const rawBelt = row.Belt || row.belt || row.BELT || ''
       const rawMaster = row['Master Name'] || row['Master name'] || row.master || row.Master || ''
@@ -97,6 +99,8 @@ router.post('/upload', upload.single('file'), async (req, res) => {
       return {
         name: String(rawName).trim(),
         age: ageVal,
+        city: rawCity ? String(rawCity).trim() : undefined,
+        email: rawEmail ? String(rawEmail).trim() : undefined,
         master: rawMaster ? String(rawMaster).trim() : undefined,
         weight: weightVal,
         districtName: rawDistrict ? String(rawDistrict).trim() : undefined,
